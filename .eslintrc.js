@@ -18,5 +18,12 @@ module.exports = {
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single"],
         "semi": ["error", "always"]
+    },
+    "globals": {
+        "jasmine": true,
+        "describe": true,
+        "it": true,
+        "expect": true,
+        "beforeEach": true,
     }
 };

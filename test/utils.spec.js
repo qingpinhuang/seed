@@ -13,7 +13,7 @@ describe('utils.js', () => {
         });
         it('should be failed although parent object has the property.', () => {
             expect(utils.has(obj, 'hasOwnProperty')).toBe(false);
-        })
+        });
     });
 
 
@@ -29,8 +29,10 @@ describe('utils.js', () => {
             expect(utils.type(1)).toBe('number');
             expect(utils.type(new Number(1))).toBe('number');
             expect(utils.type(/^\d$/)).toBe('regexp');
-            expect(utils.type(new RegExp('\d'))).toBe('regexp');
+            expect(utils.type(new RegExp('\\d'))).toBe('regexp');
             expect(utils.type(new Date)).toBe('date');
+            expect(utils.type(new Boolean(true))).toBe('boolean');
+            expect(utils.type(true)).toBe('boolean');
         });
     });
 
@@ -71,7 +73,7 @@ describe('utils.js', () => {
         it('parameter "form" and "to" is default to 10.', () => {
             expect(utils.convertRadix(11, 2)).toBe('3');
             expect(utils.convertRadix(10)).toBe('10');
-        })
+        });
     });
 
 
