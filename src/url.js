@@ -1,8 +1,10 @@
 /**
- * URL处理
+ * URL解析和处理
  *
  * 注意：
  * 1. 这里只是识别和解析URL，并不验证其有效性和准确性
+ * 2. URL保留字符（[:@/?#]）作为URL正则匹配的关键节点，以最先匹配到的保留字符为优先进行解析，后面再遇到保留字符时，将作为已匹配的内容理解。
+ *    例如有URL：http://user:password@www.qing.com?query=:@/?#hash:@/?#，解析将会得到“?query=:@/?”和“#hash:@/?#”
  *
  * @references
  * 1. https://en.wikipedia.org/wiki/URL
@@ -21,20 +23,18 @@ const user = '[^:@/?#]*';
 const password = '[^@/?#]*';
 const userinfo = `(${user})(?::(${password}))?`;
 
-const domainlabel = '[^./:?#]+';
+const domainlabel = '[^.:/?#]+';
 const hostname = `(?:(?:${domainlabel}\\.)*${domainlabel})`;
 const hostnumber = `(?:(?:${digit}{1-3}\\.){3}${digit}{1-3})`;
 const port = `[${digit}]+`;
 const host = `(${hostname}|${hostnumber})(?::(${port}))?`;
 
-const segment = '[^/?#]*';
-const path = `${segment}(?:/${segment})*`;
-
+const path = '[^?#]*';
 const query = '[^#]*';
 const fragment = '.*';
 
 const rhost = new RegExp(host);
-const rurl = new RegExp(`^(${scheme}:)?(?://(?:${userinfo}@)?${host}(/${path})?(\\?${query})?(#${fragment})?)`);
+const rurl = new RegExp(`^(${scheme}:(?=//))?(?://)?(?:${userinfo}@)?(?:${host})?(/${path})?(\\?${query})?(#${fragment})?`);
 
 class URL {
     constructor(href = '') {

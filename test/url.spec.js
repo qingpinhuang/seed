@@ -131,6 +131,22 @@ describe('url.js', () => {
 
     describe('URL.parse', () => {
         it('will parse url and return URL instance', () => {
+            const url = 'https://user:password@qing.com:8888/path/to/file.html?query=q#hash';
+            const location = URL.parse(url);
+            expect(location).toBeURLObject({
+                href: url,
+                host: 'qing.com:8888',
+                protocol: 'https:',
+                user: 'user',
+                password: 'password',
+                hostname: 'qing.com',
+                port: '8888',
+                pathname: '/path/to/file.html',
+                search: '?query=q',
+                hash: '#hash'
+            });
+        });
+        it('can parse internationalized url', () => {
             const url = 'http://中文.域名:80/路径/示例.html?query=条件&更多=more#哈希';
             const location = URL.parse(url);
             expect(location).toBeURLObject({
@@ -144,6 +160,22 @@ describe('url.js', () => {
                 pathname: '/路径/示例.html',
                 search: '?query=条件&更多=more',
                 hash: '#哈希'
+            });
+        });
+        it('can parse url although protocol is absent', () => {
+            const url = 'www.qing.com/path/to/file.html';
+            const location = URL.parse(url);
+            expect(location).toBeURLObject({
+                href: `//${url}`,
+                host: 'www.qing.com',
+                protocol: '',
+                user: '',
+                password: '',
+                hostname: 'www.qing.com',
+                port: '',
+                pathname: '/path/to/file.html',
+                search: '',
+                hash: ''
             });
         });
         it('should follow "first-match-wins" to deal url', () => {
