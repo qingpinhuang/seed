@@ -4,7 +4,7 @@
  * 注意：
  * 1. 这里只是识别和解析URL，并不验证其有效性和准确性
  * 2. URL保留字符（[:@/?#]）作为URL正则匹配的关键节点，以最先匹配到的保留字符为优先进行解析，后面再遇到保留字符时，将作为已匹配的内容理解。
- *    例如有URL：http://user:password@www.qing.com?query=:@/?#hash:@/?#，解析将会得到“?query=:@/?”和“#hash:@/?#”
+ *    例如有URL：http://username:password@www.qing.com?query=:@/?#hash:@/?#，解析将会得到“?query=:@/?”和“#hash:@/?#”
  *
  * @references
  * 1. https://en.wikipedia.org/wiki/URL
@@ -12,6 +12,7 @@
  * 3. https://en.wikipedia.org/wiki/Internationalized_Resource_Identifier
  * 4. https://tools.ietf.org/html/rfc3987
  * 5. https://tools.ietf.org/html/rfc2234
+ * 6. https://url.spec.whatwg.org
  */
 
 const alpha = 'a-zA-Z';
@@ -19,9 +20,9 @@ const digit = '0-9';
 
 const scheme = `[${alpha}][${alpha}${digit}+-.]*`;
 
-const user = '[^:@/?#]*';
+const username = '[^:@/?#]*';
 const password = '[^@/?#]*';
-const userinfo = `(${user})(?::(${password}))?`;
+const userinfo = `(${username})(?::(${password}))?`;
 
 const domainlabel = '[^.:/?#]+';
 const hostname = `(?:(?:${domainlabel}\\.)*${domainlabel})`;
@@ -43,23 +44,27 @@ class URL {
     get host() {
         return this.hostname + (this.port && `:${this.port}`);
     }
-    set host(value) {
+    set host(value = '') {
         const matches = value.match(rhost) || [];
         Object.assign(this, {
             hostname: matches[1] || '',
             port: matches[2] || '',
         });
     }
+    get origin() {
+        if (!this.protocol || !this.hostname) return '';
+        return `${this.protocol}//${this.host}`;
+    }
     get href() {
-        const userinfo = this.user + (this.password && `:${this.password}`) + ((this.user || this.password) && '@');
+        const userinfo = this.username + (this.password && `:${this.password}`) + ((this.username || this.password) && '@');
         const double_slash = this.protocol || userinfo || this.host || this.pathname ? '//' : '';
         return `${this.protocol}${double_slash}${userinfo}${this.host}${this.pathname}${this.search}${this.hash}`;
     }
-    set href(value) {
+    set href(value = '') {
         const matches = value.match(rurl) || [];
         Object.assign(this, {
             protocol: matches[1] || '',
-            user: matches[2] || '',
+            username: matches[2] || '',
             password: matches[3] || '',
             hostname: matches[4] || '',
             port: matches[5] || '',

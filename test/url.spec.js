@@ -39,7 +39,7 @@ describe('url.js', () => {
     });
 
     describe('URL instance', () => {
-        const url = 'https://user:password@hostname.com:8888/path/to/file.html?query=string&result=object#hash';
+        const url = 'https://username:password@hostname.com:8888/path/to/file.html?query=string&result=object#hash';
         const location = new URL(url);
         it('is an object', () => {
             expect(typeof location).toBe('object');
@@ -50,7 +50,8 @@ describe('url.js', () => {
                 href: url,
                 host: 'hostname.com:8888',
                 protocol: 'https:',
-                user: 'user',
+                origin: 'https://hostname.com:8888',
+                username: 'username',
                 password: 'password',
                 hostname: 'hostname.com',
                 port: '8888',
@@ -71,7 +72,8 @@ describe('url.js', () => {
                 href: '',
                 host: '',
                 protocol: '',
-                user: '',
+                origin: '',
+                username: '',
                 password: '',
                 hostname: '',
                 port: '',
@@ -87,7 +89,8 @@ describe('url.js', () => {
                 href: '//www.qing.com:80',
                 host: 'www.qing.com:80',
                 protocol: '',
-                user: '',
+                origin: '',
+                username: '',
                 password: '',
                 hostname: 'www.qing.com',
                 port: '80',
@@ -101,7 +104,8 @@ describe('url.js', () => {
                 href: 'http://qing.com:8888/path/file.html',
                 host: 'qing.com:8888',
                 protocol: 'http:',
-                user: '',
+                origin: 'http://qing.com:8888',
+                username: '',
                 password: '',
                 hostname: 'qing.com',
                 port: '8888',
@@ -115,11 +119,27 @@ describe('url.js', () => {
                 href: 'http:///path/file.html',
                 host: '',
                 protocol: 'http:',
-                user: '',
+                origin: '',
+                username: '',
                 password: '',
                 hostname: '',
                 port: '',
                 pathname: '/path/file.html',
+                search: '',
+                hash: ''
+            });
+
+            temp.href = undefined;
+            expect(temp).toBeURLObject({
+                href: '',
+                host: '',
+                protocol: '',
+                origin: '',
+                username: '',
+                password: '',
+                hostname: '',
+                port: '',
+                pathname: '',
                 search: '',
                 hash: ''
             });
@@ -131,13 +151,14 @@ describe('url.js', () => {
 
     describe('URL.parse', () => {
         it('will parse url and return URL instance', () => {
-            const url = 'https://user:password@qing.com:8888/path/to/file.html?query=q#hash';
+            const url = 'https://username:password@qing.com:8888/path/to/file.html?query=q#hash';
             const location = URL.parse(url);
             expect(location).toBeURLObject({
                 href: url,
                 host: 'qing.com:8888',
                 protocol: 'https:',
-                user: 'user',
+                origin: 'https://qing.com:8888',
+                username: 'username',
                 password: 'password',
                 hostname: 'qing.com',
                 port: '8888',
@@ -153,7 +174,8 @@ describe('url.js', () => {
                 href: url,
                 host: '中文.域名:80',
                 protocol: 'http:',
-                user: '',
+                origin: 'http://中文.域名:80',
+                username: '',
                 password: '',
                 hostname: '中文.域名',
                 port: '80',
@@ -169,7 +191,8 @@ describe('url.js', () => {
                 href: `//${url}`,
                 host: 'www.qing.com',
                 protocol: '',
-                user: '',
+                origin: '',
+                username: '',
                 password: '',
                 hostname: 'www.qing.com',
                 port: '',
@@ -179,13 +202,14 @@ describe('url.js', () => {
             });
         });
         it('should follow "first-match-wins" to deal url', () => {
-            const url = 'http://user:password@www.qing.com?query=:@/?#hash:@/?#';
+            const url = 'http://username:password@www.qing.com?query=:@/?#hash:@/?#';
             const location = URL.parse(url);
             expect(location).toBeURLObject({
                 href: url,
                 host: 'www.qing.com',
                 protocol: 'http:',
-                user: 'user',
+                origin: 'http://www.qing.com',
+                username: 'username',
                 password: 'password',
                 hostname: 'www.qing.com',
                 port: '',
