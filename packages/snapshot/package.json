@@ -1,0 +1,28 @@
+{
+  "name": "@seed/snapshot",
+  "version": "0.0.0",
+  "description": "",
+  "author": "qingpinhuang",
+  "main": "src/snapshot.js",
+  "scripts": {
+    "dev": "",
+    "build": "",
+    "test": "karma start"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "babel-plugin-istanbul": "^7.0.0",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.1",
+    "chai": "^4.5.0",
+    "karma": "^6.4.4",
+    "karma-browserify": "^8.1.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.1",
+    "karma-mocha": "^2.0.1",
+    "mocha": "^11.1.0",
+    "watchify": "^4.0.0"
+  }
+}
