@@ -1,0 +1,50 @@
+{
+  "name": "react-nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack -p 9000",
+    "build:test": "NODE_ENV=test next build",
+    "build": "next build",
+    "start": "next start",
+    "start:static": "serve out",
+    "lint": "next lint",
+    "extract": "lingui extract",
+    "compile": "lingui compile"
+  },
+  "engines": {
+    "node": ">= 20"
+  },
+  "dependencies": {
+    "@lingui/core": "^5.3.1",
+    "@lingui/react": "^5.3.1",
+    "gsap": "^3.12.7",
+    "libpag": "^4.2.84",
+    "next": "15.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "swr": "^2.3.3",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@lingui/cli": "^5.3.1",
+    "@lingui/swc-plugin": "^5.5.2",
+    "@next/eslint-plugin-next": "^15.3.1",
+    "@svgr/webpack": "^8.1.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "class-variance-authority": "^0.7.1",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "serve": "^14.2.4",
+    "tailwind-merge": "^3.2.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

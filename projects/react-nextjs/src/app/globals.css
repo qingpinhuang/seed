@@ -1,0 +1,156 @@
+@import 'tailwindcss';
+
+/* :root {
+  --background: #ffffff;
+  --foreground: #171717;
+} */
+
+/* 系统主题色 */
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+/* 主题变量：https://tailwindcss.com/docs/theme */
+@theme inline {
+  /* --color-background: var(--background);
+  --color-foreground: var(--foreground); */
+  /* --color-blue: #01a1ff; */
+
+  --font-NunitoSans: 'NunitoSans';
+
+  --text-2xs: 0.625rem;
+}
+
+/* @font-face {
+  font-family: 'NunitoSans';
+  font-weight: 900;
+  src: url('../assets/fonts/NunitoSans-Black.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NunitoSans';
+  font-weight: 800;
+  src: url('../assets/fonts/NunitoSans-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NunitoSans';
+  font-weight: 700;
+  src: url('../assets/fonts/NunitoSans-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NunitoSans';
+  font-weight: 600;
+  src: url('../assets/fonts/NunitoSans-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NunitoSans';
+  font-weight: 500;
+  src: url('../assets/fonts/NunitoSans-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NunitoSans';
+  font-weight: 400;
+  src: url('../assets/fonts/NunitoSans-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NunitoSans';
+  font-weight: 300;
+  src: url('../assets/fonts/NunitoSans-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NunitoSans';
+  font-weight: 200;
+  src: url('../assets/fonts/NunitoSans-ExtraLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NunitoSans';
+  font-weight: 100;
+  src: url('../assets/fonts/NunitoSans-Thin.ttf') format('truetype');
+} */
+
+@layer base {
+  body {
+    /* background: var(--background);
+    color: var(--foreground); */
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  /* iOS 兼容 */
+  .safe-area-inset-bottom {
+    padding-bottom: constant(safe-area-inset-bottom) !important;
+    padding-bottom: env(safe-area-inset-bottom) !important;
+  }
+
+  /* 滚动条 */
+  .scrollbar-hidden::-webkit-scrollbar {
+    @apply h-0 w-0;
+  }
+  .scrollbar-transparent::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+  }
+  .scrollbar-transparent::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+  }
+
+  /* Button */
+  .button-flash {
+    @apply relative overflow-hidden;
+    &::after {
+      content: '';
+      animation: button-flash 3s ease-out infinite;
+      @apply absolute top-0 bottom-0 left-[120%] z-10 w-[10%];
+      @apply skew-x-[-45deg] bg-[rgba(255,255,255,.45)] blur-sm;
+    }
+  }
+  @keyframes button-flash {
+    0% {
+      left: -120%;
+    }
+    20% {
+      left: 120%;
+    }
+    100% {
+      left: 120%;
+    }
+  }
+
+  /* Modal */
+  @keyframes toast-in {
+    0% {
+      opacity: 0;
+      transform: scale(0) translateZ(0);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes toast-out {
+    0% {
+      opacity: 1;
+      transform: none;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0) translateZ(0);
+    }
+  }
+
+  /* Text */
+  .text-border {
+    text-shadow:
+      1px -1px 0 #000,
+      1px 1px 0 #000,
+      -1px -1px 0 #000,
+      -1px 1px 0 #000;
+  }
+  .text-gradient {
+    color: transparent;
+    background: linear-gradient(90deg, #ffe77f 0%, #e5b045 100%);
+    background-clip: text;
+  }
+}
